@@ -1,0 +1,5 @@
+id,category,is_weekly,target_hours
+1,Sleep,False,8.0
+2,Woek,True,40.0
+3,Move,True,8.0
+4,Learning,True,15.0

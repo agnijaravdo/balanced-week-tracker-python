@@ -2,6 +2,7 @@
 from enum import Enum
 from simple_term_menu import TerminalMenu
 
+from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
 from utils import clear_screen
 
 
@@ -34,7 +35,7 @@ def show_mode_selection_menu():
 
         clear_screen()
         if selected_mode == StartMenuItem.SET_CATEGORIES_AND_TARGET_HOURS:
-            print("Set target")
+            enter_categories_and_target_hours()
         elif selected_mode == StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS:
             print("Validate if categories not null and show categories and times data")
         elif selected_mode == StartMenuItem.LOG_ACTIVITIES_AND_HOURS:
