@@ -3,6 +3,7 @@ from enum import Enum
 from simple_term_menu import TerminalMenu
 
 from category import Category
+from modes.log_activities_and_hours_mode import log_activities_and_hours
 from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
 from modes.show_categories_and_target_hours_mode import show_categories_and_target_hours
 from utils import clear_screen
@@ -39,7 +40,7 @@ def show_mode_selection_menu():
         elif selected_mode == StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS:
             validate_categories_count(show_categories_and_target_hours, selected_mode)
         elif selected_mode == StartMenuItem.LOG_ACTIVITIES_AND_HOURS:
-            print("Validate if categories not null and log activities and hours")
+            validate_categories_count(log_activities_and_hours, selected_mode)
         elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
             print("Validate if categories not null and show weekly strava data")
         elif selected_mode == StartMenuItem.DISPLAY_DOWNLOAD_DATA:
@@ -56,7 +57,7 @@ def validate_categories_count(
     categories_count = Category.get_number_of_categories()
     if categories_count == 0:
         print(
-            f"\n❗ To select '{selected_mode.value}' you need to have at least one category added. Current count of categories is {categories_count}\n"
+            f"\n❗ To select '{selected_mode.value}' mode you need to have at least one category added. Current count of categories is {categories_count}\n"
         )
     else:
         function_name()
