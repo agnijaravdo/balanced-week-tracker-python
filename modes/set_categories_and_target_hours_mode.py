@@ -52,7 +52,7 @@ def is_category_name_valid(category_name):
     else:
         return True
     
-def get_correct_target_hours_input(frequency, category_name):
+def get_correct_target_hours_input(frequency, category_name) -> float:
     while True:
         try:
             target_hours = float(input(f"Enter target {frequency} hours for {category_name}: ").strip())

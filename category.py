@@ -5,7 +5,7 @@ import os
 CATEGORIES_AND_GOALS_DATA_PATH = "data/categories_and_goals.csv"
 
 class Category:
-    def __init__(self, category_name, target_hours, is_weekly):
+    def __init__(self, category_name, target_hours, is_weekly) -> None:
         self.category_name = category_name
         self.target_hours = target_hours
         self.is_weekly = is_weekly
@@ -14,7 +14,7 @@ class Category:
         return f"Category {self.category_name} with target hours {self.target_hours}"
 
     @staticmethod
-    def writeCategoryAndTargetHoursToFile(category):
+    def writeCategoryAndTargetHoursToFile(category) -> None:
         is_file_exists = os.path.isfile(CATEGORIES_AND_GOALS_DATA_PATH)
 
         max_id = 0
@@ -51,7 +51,7 @@ class Category:
 
 
     @staticmethod
-    def get_all_categories():
+    def get_all_categories() -> list:
         categories = []
         with open(CATEGORIES_AND_GOALS_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
@@ -66,13 +66,13 @@ class Category:
 
 
     @staticmethod
-    def get_number_of_categories():
+    def get_number_of_categories() -> int:
         categories = Category.get_all_categories()
         categories_count = len(categories)
         return categories_count
     
     @staticmethod
-    def get_category_names(categories):
+    def get_category_names(categories) -> list:
         category_names = []
         for category in categories:
             category_names.append(category.category_name)
