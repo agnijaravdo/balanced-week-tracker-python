@@ -1,6 +1,7 @@
 from category import Category
 from tabulate import tabulate
 
+
 def show_categories_and_target_hours():
     categories = Category.get_all_categories()
 

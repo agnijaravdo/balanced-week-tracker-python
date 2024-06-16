@@ -1,0 +1,13 @@
+id,date,category,is_weekly,target_hours,logged_in_hours
+1,2022-01-01,Sleep,False,8.0,5.0
+2,2022-01-01,Work,True,40.0,0.0
+3,2022-01-02,Learning,True,15.0,4.0
+4,2022-03-05,Move,True,8.0,2.0
+5,2022-01-05,Sleep,False,8.0,8.0
+6,2022-01-03,Move,True,8.0,4.0
+7,2022-10-19,Sleep,False,8.0,5.0
+8,2024-04-02,Work,True,40.0,4.0
+9,2024-04-02,Work,True,40.0,3.0
+10,2022-01-05,Sleep,False,8.0,5.0
+11,2022-03-04,Work,True,40.0,5.0
+12,2022-05-10,Sleep,False,8.0,5.0
