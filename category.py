@@ -47,7 +47,7 @@ class Category:
                 }
             )
             
-            print(f"\nCategory '{category.category_name}' with target hours '{category.target_hours}' added successfully")
+            print(f"\nCategory '{category.category_name}' with target hours '{category.target_hours}' was added successfully\n")
 
 
     @staticmethod
@@ -70,3 +70,11 @@ class Category:
         categories = Category.get_all_categories()
         categories_count = len(categories)
         return categories_count
+    
+    @staticmethod
+    def get_category_names(categories):
+        category_names = []
+        for category in categories:
+            category_names.append(category.category_name)
+        
+        return category_names
