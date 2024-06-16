@@ -5,19 +5,27 @@ from utils import clear_screen, print_heading
 
 def enter_categories_and_target_hours():
     print_heading("Set Categories and Target Hours")
+    print("⬅️ To go back to the main menu, press Ctrl+C or Ctrl+D. To close the program, press Ctrl+Z.\n")
+
     while True:
-        category_name = input("Enter category like 'Sleep', 'Work', 'Move', etc. name (or 'done' to finish): ").strip()
-        if not is_category_name_valid(category_name):
-            print("Please enter a valid category name. It cannot be empty, consist only of numbers or be already logged in")
-            continue
-        if category_name.lower() == 'done':
+        try:
+            category_name = input("Enter category like 'Sleep', 'Work', 'Move', etc. name (or 'done' to finish): ").strip()
+            if not is_category_name_valid(category_name):
+                print("Please enter a valid category name. It cannot be empty, consist only of numbers or be already logged in")
+                continue
+            if category_name.lower() == 'done':
+                clear_screen()
+                break
+            is_weekly = is_target_weekly()
+            if is_weekly == None:
+                break
+            frequency = "weekly" if is_weekly else "daily"
+            target_hours = get_correct_target_hours_input(frequency, category_name)
+            category = Category(category_name, target_hours, is_weekly)
+            category.writeCategoryAndTargetHoursToFile(category)
+        except (KeyboardInterrupt, EOFError):
             clear_screen()
             break
-        is_weekly = is_target_weekly()
-        frequency = "weekly" if is_weekly else "daily"
-        target_hours = get_correct_target_hours_input(frequency, category_name)
-        category = Category(category_name, target_hours, is_weekly)
-        category.writeCategoryAndTargetHoursToFile(category)
    
 
     
@@ -27,7 +35,7 @@ def is_target_weekly() -> bool:
             options,
             title="\nℹ️ Select whether category hours goal is weekly or daily: \n",
             menu_cursor_style=("fg_green", "bold"),
-            quit_keys=("escape", "q", "ctrl-g", "ctrl-c", "ctrl-d")
+            quit_keys=()
         )
     menu_entry_index = terminal_menu.show()
 
