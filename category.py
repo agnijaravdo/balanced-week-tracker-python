@@ -56,12 +56,13 @@ class Category:
         with open(CATEGORIES_AND_GOALS_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                question = Category(
+                category = Category(
                     category_name=row["category"],
                     target_hours=row["target_hours"],
                     is_weekly=row["is_weekly"]
                 )
-                categories.append(question)
+                category.id = int(row["id"])
+                categories.append(category)
         return categories
 
 

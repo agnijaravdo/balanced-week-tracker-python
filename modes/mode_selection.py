@@ -4,6 +4,7 @@ from simple_term_menu import TerminalMenu
 
 from category import Category
 from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
+from modes.show_categories_and_target_hours_mode import show_categories_and_target_hours
 from utils import clear_screen
 
 
@@ -36,7 +37,7 @@ def show_mode_selection_menu():
         if selected_mode == StartMenuItem.SET_CATEGORIES_AND_TARGET_HOURS:
             enter_categories_and_target_hours()
         elif selected_mode == StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS:
-            validate_categories_count(enter_categories_and_target_hours, selected_mode)
+            validate_categories_count(show_categories_and_target_hours, selected_mode)
         elif selected_mode == StartMenuItem.LOG_ACTIVITIES_AND_HOURS:
             print("Validate if categories not null and log activities and hours")
         elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
