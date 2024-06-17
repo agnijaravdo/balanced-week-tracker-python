@@ -8,7 +8,14 @@ LOGGED_IN_ACTIVITIES_DATA_PATH = "data/logged_in_activities.csv"
 
 
 class Category:
-    def __init__(self, category_name, target_hours, is_weekly, logged_in_hours=0.0, activity_date = "" ) -> None:
+    def __init__(
+        self,
+        category_name,
+        target_hours,
+        is_weekly,
+        logged_in_hours=0.0,
+        activity_date="",
+    ) -> None:
         self.category_name = category_name
         self.target_hours = target_hours
         self.is_weekly = is_weekly
@@ -32,13 +39,7 @@ class Category:
                         max_id = row_id
 
         with open(CATEGORIES_AND_GOALS_DATA_PATH, "a") as file:
-            header = [
-                "id",
-                "category",
-                "is_weekly",
-                "target_hours",
-                "logged_in_hours"
-            ]
+            header = ["id", "category", "is_weekly", "target_hours", "logged_in_hours"]
             writer = csv.DictWriter(file, fieldnames=header)
 
             if (
@@ -53,8 +54,7 @@ class Category:
                     "category": category.category_name,
                     "is_weekly": category.is_weekly,
                     "target_hours": category.target_hours,
-                    "logged_in_hours": category.logged_in_hours
-
+                    "logged_in_hours": category.logged_in_hours,
                 }
             )
 
@@ -171,19 +171,24 @@ class Category:
         )
 
     @staticmethod
-    def calculate_logged_in_hours_for_category(categories, start_date=None, end_date=None):
+    def calculate_logged_in_hours_for_category(
+        categories, start_date=None, end_date=None
+    ):
         with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
-                activity_date = datetime.strptime(row["date"], "%Y-%m-%d") 
-                if start_date and end_date and (activity_date < start_date or activity_date > end_date):
+                activity_date = datetime.strptime(row["date"], "%Y-%m-%d")
+                if (
+                    start_date
+                    and end_date
+                    and (activity_date < start_date or activity_date > end_date)
+                ):
                     continue
                 category_name = row["category"]
                 logged_in_hours = float(row["logged_in_hours"])
                 for category in categories:
                     if category.category_name == category_name:
                         category.logged_in_hours += logged_in_hours
-
 
     def get_all_activities() -> list:
         activities = []
@@ -195,12 +200,11 @@ class Category:
                     category_name=row["category"],
                     target_hours=row["target_hours"],
                     is_weekly=row["is_weekly"] == "True",
-                    logged_in_hours=row["logged_in_hours"]
+                    logged_in_hours=row["logged_in_hours"],
                 )
                 activity.id = int(row["id"])
                 activities.append(activity)
         return activities
-
 
     @staticmethod
     def get_number_of_activities() -> int:

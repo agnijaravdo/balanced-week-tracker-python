@@ -17,7 +17,9 @@ def show_weekly_strava_activities():
     )
     try:
         activities_response = get_strava_activities_response()
-        activities_details = return_and_print_weekly_strava_activities_details(activities_response)
+        activities_details = return_and_print_weekly_strava_activities_details(
+            activities_response
+        )
         response = select_whether_to_log_activities_from_strava()
         log_activities_based_on_response(response, activities_details)
     except (KeyboardInterrupt, EOFError):
@@ -29,7 +31,7 @@ def get_strava_activities_response():
 
     load_dotenv()
 
-    STRAVA_ACCESS_TOKEN = os.getenv('STRAVA_ACCESS_TOKEN')
+    STRAVA_ACCESS_TOKEN = os.getenv("STRAVA_ACCESS_TOKEN")
 
     url = "https://www.strava.com/api/v3/athlete/activities"
 
@@ -68,14 +70,17 @@ def return_and_print_weekly_strava_activities_details(activities_response):
             f"{i}. {activity_type} activity with name: '{activity_name}' on {activity_date} and moving time: {activity_moving_time}"
         )
 
-        activities_details.append({
-            "name": activity_name,
-            "type": activity_type,
-            "date": activity_date,
-            "moving_time": activity_moving_time
-        })
-    
+        activities_details.append(
+            {
+                "name": activity_name,
+                "type": activity_type,
+                "date": activity_date,
+                "moving_time": activity_moving_time,
+            }
+        )
+
     return activities_details
+
 
 def select_whether_to_log_activities_from_strava():
     options = ["Yes", "No"]
@@ -98,6 +103,7 @@ def select_whether_to_log_activities_from_strava():
 
     return selected_mode
 
+
 def select_whether_to_log_individual_activity_from_strava(activity_info):
     options = ["Yes", "No"]
     terminal_menu = TerminalMenu(
@@ -111,7 +117,7 @@ def select_whether_to_log_individual_activity_from_strava(activity_info):
         menu_entry_index = terminal_menu.show()
     except (KeyboardInterrupt, EOFError):
         return None
-    
+
     if menu_entry_index == None:
         return
 
@@ -120,7 +126,6 @@ def select_whether_to_log_individual_activity_from_strava(activity_info):
     return selected_mode
 
 
-    
 def log_activities_based_on_response(response, activities_details):
     if response == "No":
         clear_screen()
@@ -131,20 +136,30 @@ def log_activities_based_on_response(response, activities_details):
             clear_screen()
             return
         for activity in activities_details:
-            name, activity_type, date, moving_time = activity["name"], activity["type"], activity["date"], activity["moving_time"]
+            name, activity_type, date, moving_time = (
+                activity["name"],
+                activity["type"],
+                activity["date"],
+                activity["moving_time"],
+            )
             activity_info = f"{activity_type} activity with name: '{name}' on {date} and moving time: {moving_time}"
             parsed_date = date.strftime("%Y-%m-%d")
             parsed_moving_time = time_string_to_float(moving_time)
-            activity_to_log_response = select_whether_to_log_individual_activity_from_strava(activity_info)
+            activity_to_log_response = (
+                select_whether_to_log_individual_activity_from_strava(activity_info)
+            )
             if activity_to_log_response is None:
                 clear_screen()
                 return
             if activity_to_log_response.lower() == "yes":
-                Category.update_or_create_log_entry(parsed_date, category, parsed_moving_time)
+                Category.update_or_create_log_entry(
+                    parsed_date, category, parsed_moving_time
+                )
             elif activity_to_log_response.lower() == "no":
                 return
-        
+
         clear_screen()
+
 
 def time_string_to_float(time_string):
     time_parts = time_string.split(":")
@@ -154,5 +169,3 @@ def time_string_to_float(time_string):
     total_hours_rounded = round(total_hours, 2)
 
     return total_hours_rounded
-
-        

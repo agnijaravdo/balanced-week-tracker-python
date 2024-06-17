@@ -2,7 +2,9 @@ from enum import Enum
 from simple_term_menu import TerminalMenu
 
 from category import Category
-from modes.display_performance_data import display_total_logged_in_hours_for_each_category
+from modes.display_performance_data import (
+    display_total_logged_in_hours_for_each_category,
+)
 from modes.log_activities_and_hours_mode import log_activities_and_hours
 from modes.personalized_week_analysis import show_personalised_week_analysis
 from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
@@ -47,7 +49,9 @@ def show_mode_selection_menu():
         elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
             validate_categories_count(show_weekly_strava_activities, selected_mode)
         elif selected_mode == StartMenuItem.GENERATE_PERFORMANCE_DATA:
-            validate_activities_count(display_total_logged_in_hours_for_each_category, selected_mode)
+            validate_activities_count(
+                display_total_logged_in_hours_for_each_category, selected_mode
+            )
         elif selected_mode == StartMenuItem.PERSONALIZED_WEEK_ANALYSIS:
             validate_activities_count(show_personalised_week_analysis, selected_mode)
         elif selected_mode == StartMenuItem.EXIT_PROGRAM:
@@ -63,6 +67,7 @@ def validate_categories_count(function_name, selected_mode):
         )
     else:
         function_name()
+
 
 def validate_activities_count(function_name, selected_mode):
     activities_count = Category.get_number_of_activities()
