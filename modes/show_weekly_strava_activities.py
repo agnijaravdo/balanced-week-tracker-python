@@ -7,10 +7,14 @@ import requests
 from dotenv import load_dotenv
 from category import Category
 from modes.log_activities_and_hours_mode import select_activity_category
-from utils import clear_screen
+from utils import clear_screen, print_heading
 
 
 def show_weekly_strava_activities():
+    print_heading("Weekly Strava Activities")
+    print(
+        "⬅️ To go back to the main menu - press Ctrl+C or Ctrl+D. To close the program, press Ctrl+Z.\n"
+    )
     try:
         activities_response = get_strava_activities_response()
         activities_details = return_and_print_weekly_strava_activities_details(activities_response)

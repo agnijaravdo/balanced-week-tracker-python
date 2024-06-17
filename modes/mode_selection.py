@@ -2,6 +2,7 @@ from enum import Enum
 from simple_term_menu import TerminalMenu
 
 from category import Category
+from modes.display_data import display_total_logged_in_hours_for_each_category
 from modes.log_activities_and_hours_mode import log_activities_and_hours
 from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
 from modes.show_categories_and_target_hours_mode import show_categories_and_target_hours
@@ -14,7 +15,7 @@ class StartMenuItem(Enum):
     SHOW_CATEGORIES_AND_TARGET_HOURS = "Show categories and target hours"
     LOG_ACTIVITIES_AND_HOURS = "Log activities and hours"
     SHOW_WEEKLY_STRAVA_ACTIVITIES = "Show weekly Strava activities"
-    DISPLAY_DOWNLOAD_DATA = "Display and/or download data"
+    DISPLAY_DATA = "Display data"
     PERSONALIZED_WEEK_ANALYSIS = "Personalized week analysis"
     EXIT_PROGRAM = "Exit program"
 
@@ -44,10 +45,8 @@ def show_mode_selection_menu():
             validate_categories_count(log_activities_and_hours, selected_mode)
         elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
             validate_categories_count(show_weekly_strava_activities, selected_mode)
-        elif selected_mode == StartMenuItem.DISPLAY_DOWNLOAD_DATA:
-            print(
-                "Validate if categories and activities not null and display and/or download data"
-            )
+        elif selected_mode == StartMenuItem.DISPLAY_DATA:
+            validate_activities_count(display_total_logged_in_hours_for_each_category, selected_mode)
         elif selected_mode == StartMenuItem.PERSONALIZED_WEEK_ANALYSIS:
             print(
                 "Validate if categories and activities not null and display personalized week analysis"
@@ -62,6 +61,15 @@ def validate_categories_count(function_name, selected_mode):
     if categories_count == 0:
         print(
             f"\n❗ To select '{selected_mode.value}' mode you need to have at least one category added. Current count of categories is {categories_count}\n"
+        )
+    else:
+        function_name()
+
+def validate_activities_count(function_name, selected_mode):
+    activities_count = Category.get_number_of_activities()
+    if activities_count == 0:
+        print(
+            f"\n❗ To select '{selected_mode.value}' mode you need to have at least one activity added. Current count of activities is {activities_count}\n"
         )
     else:
         function_name()

@@ -11,3 +11,8 @@ id,date,category,is_weekly,target_hours,logged_in_hours
 10,2022-01-05,Sleep,False,8.0,5.0
 11,2022-03-04,Work,True,40.0,5.0
 12,2022-05-10,Sleep,False,8.0,5.0
+13,2024-06-16,Move,True,8.0,2.71
+14,2024-06-13,Move,True,8.0,0.94
+15,2024-06-17,Learning,True,15.0,6.0
+16,2024-06-17,Work,True,40.0,8.0
+17,2024-06-17,Sleep,False,8.0,8.0

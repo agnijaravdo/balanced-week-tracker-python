@@ -1,16 +1,19 @@
 import csv
 import os
+from datetime import datetime
 
 
 CATEGORIES_AND_GOALS_DATA_PATH = "data/categories_and_goals.csv"
-LOGGED_IN_DATA_PATH = "data/logged_in_data.csv"
+LOGGED_IN_ACTIVITIES_DATA_PATH = "data/logged_in_activities.csv"
 
 
 class Category:
-    def __init__(self, category_name, target_hours, is_weekly) -> None:
+    def __init__(self, category_name, target_hours, is_weekly, logged_in_hours=0.0, activity_date = "" ) -> None:
         self.category_name = category_name
         self.target_hours = target_hours
         self.is_weekly = is_weekly
+        self.logged_in_hours = logged_in_hours
+        self.activity_date = activity_date
 
     def __repr__(self) -> str:
         return f"Category {self.category_name} with target hours {self.target_hours}"
@@ -34,6 +37,7 @@ class Category:
                 "category",
                 "is_weekly",
                 "target_hours",
+                "logged_in_hours"
             ]
             writer = csv.DictWriter(file, fieldnames=header)
 
@@ -49,6 +53,8 @@ class Category:
                     "category": category.category_name,
                     "is_weekly": category.is_weekly,
                     "target_hours": category.target_hours,
+                    "logged_in_hours": category.logged_in_hours
+
                 }
             )
 
@@ -116,7 +122,7 @@ class Category:
         temp_rows = []
 
         try:
-            with open(LOGGED_IN_DATA_PATH, "r") as file:
+            with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     temp_rows.append(row)
@@ -156,10 +162,48 @@ class Category:
             "logged_in_hours",
         ]
 
-        with open(LOGGED_IN_DATA_PATH, "w", newline="") as file:
+        with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "w", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(temp_rows)
         print(
             f"\nLog entry for date '{activity_date}' and category '{activity_category}' was successfully updated or created.\n"
         )
+
+    @staticmethod
+    def calculate_logged_in_hours_for_category(categories, start_date=None, end_date=None):
+        with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                activity_date = datetime.strptime(row["date"], "%Y-%m-%d") 
+                if start_date and end_date and (activity_date < start_date or activity_date > end_date):
+                    continue
+                category_name = row["category"]
+                logged_in_hours = float(row["logged_in_hours"])
+                for category in categories:
+                    if category.category_name == category_name:
+                        category.logged_in_hours += logged_in_hours
+
+
+    def get_all_activities() -> list:
+        activities = []
+        with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                activity = Category(
+                    activity_date=row["date"],
+                    category_name=row["category"],
+                    target_hours=row["target_hours"],
+                    is_weekly=row["is_weekly"] == "True",
+                    logged_in_hours=row["logged_in_hours"]
+                )
+                activity.id = int(row["id"])
+                activities.append(activity)
+        return activities
+
+
+    @staticmethod
+    def get_number_of_activities() -> int:
+        categories = Category.get_all_activities()
+        categories_count = len(categories)
+        return categories_count
