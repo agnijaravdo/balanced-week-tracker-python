@@ -75,15 +75,12 @@ class Activity:
     def update_or_create_log_entry(
         categories, activity_date, activity_category, logged_in_hours
     ):
-        category = next(
-            (
-                cat
-                for cat in categories
-                if cat.category_name.strip().lower()
-                == activity_category.strip().lower()
-            ),
-            None,
-        )
+        
+        category = None
+        for cat in categories:
+            if cat.category_name.strip().lower() == activity_category.strip().lower():
+                category = cat
+                break
 
         temp_rows = []
 

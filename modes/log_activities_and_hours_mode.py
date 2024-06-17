@@ -4,8 +4,7 @@ from activity import Activity
 from category import Category
 from utils import clear_screen, print_heading
 
-
-def log_activities_and_hours():
+def log_activities_and_hours() -> None:
     print_heading("Log Activities And Hours Spent on Them")
     print(
         "⬅️ To go back to the main menu or finish entering activities - press Ctrl+C or Ctrl+D. To close the program, press Ctrl+Z.\n"
@@ -19,33 +18,45 @@ def log_activities_and_hours():
 
     while True:
         try:
-            activity_category = select_activity_category()
-            if activity_category == None:
-                break
-            hours_spent_on_activity = enter_hours_spent_on_activity(logged_date)
-            categories = Category.get_all_categories()
-            Activity.update_or_create_log_entry(
-                categories, logged_date, activity_category, hours_spent_on_activity
-            )
-            while True:
-                enter_for_the_same_date = input(
-                    f"Do you want to input next activities for the same date {logged_date}? y/n: "
-                ).lower()
-                if enter_for_the_same_date == "y":
-                    break
-                elif enter_for_the_same_date == "n":
-                    logged_date = enter_activity_date()
-                    break
-                elif not enter_for_the_same_date in ["y", "n"]:
-                    print("Invalid input. Please enter 'y' or 'n'.")
-                    continue
-
+            enter_categories_and_target_hours(logged_date)
+            logged_date = ask_for_the_same_activity_date(logged_date)
+            
         except (KeyboardInterrupt, EOFError):
             clear_screen()
             break
 
 
-def enter_activity_date():
+def enter_categories_and_target_hours(logged_date: datetime.date) -> None:
+    activity_category = select_activity_category()
+    if activity_category is not None:
+        hours_spent_on_activity = enter_hours_spent_on_activity(logged_date)
+        categories = Category.get_all_categories()
+        Activity.update_or_create_log_entry(
+            categories, logged_date, activity_category, hours_spent_on_activity
+        )
+
+def ask_for_the_same_activity_date(logged_date: datetime.date) -> (datetime.date | None):
+    while True:
+        enter_for_the_same_date = input(
+            f"Do you want to input next activities for the same date {logged_date}? y/n: "
+        ).lower()
+        
+        if enter_for_the_same_date in ["y", "n"]:
+            break
+        else:
+            print("Invalid input. Input can be only 'y' or 'n'")
+    
+    if enter_for_the_same_date == "n":
+        try:
+            return enter_activity_date()
+        except (KeyboardInterrupt, EOFError):
+            clear_screen()
+            return None
+    return logged_date
+
+
+
+def enter_activity_date() -> datetime.date:
     while True:
         try:
             date = input("Enter a date to log your activity (YYYY-MM-DD format).: ")
@@ -78,7 +89,7 @@ def select_activity_category():
     return selected_mode
 
 
-def enter_hours_spent_on_activity(date):
+def enter_hours_spent_on_activity(date: datetime.date) -> float:
     while True:
         try:
             logged_daily_hours = float(
