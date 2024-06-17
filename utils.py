@@ -6,7 +6,7 @@ def clear_screen():
 
 
 def print_heading(text):
-    line_length = 50
+    line_length = 60
     print("\n" + "-" * line_length)
     print(text.center(line_length))
     print("-" * line_length + "\n")
