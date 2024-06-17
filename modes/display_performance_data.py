@@ -9,7 +9,7 @@ DAILY_PERFORMANCE_DATA_PATH = "data/daily_performance.csv"
 
 
 def display_total_logged_in_hours_for_each_category():
-    print_heading("Display performance for each category")
+    print_heading("Weekly and daily performace data for each category")
 
     today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
     start_of_week = today - timedelta(days=today.weekday())

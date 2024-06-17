@@ -45,7 +45,7 @@ def display_weekly_goals_performance():
             elif target_hours < logged_in_hours:
                 difference = logged_in_hours - target_hours
                 print(
-                    f"OVERACHIEVED 💡: You logged in {difference:.2f} extra hours. Great job, but remember to also take care of your well-being and avoid burning out or not sticking to your planned tasks"
+                    f"OVERACHIEVED 💡: You logged in {difference:.2f} extra hours. \nGreat job, but remember to also take care of your well-being and avoid burning out or not sticking to your planned tasks"
                 )
 
             print("")
@@ -85,7 +85,7 @@ def display_daily_goals_performance():
             elif target_hours < logged_in_hours:
                 difference = logged_in_hours - target_hours
                 print(
-                    f"OVERACHIEVED 💡: You logged in {difference:.2f} extra hours. Great job, but remember to also take care of your well-being and avoid burning out or not sticking to your planned tasks"
+                    f"OVERACHIEVED 💡: You logged in {difference:.2f} extra hours. \nGreat job, but remember to also take care of your well-being and avoid burning out or not sticking to your planned tasks"
                 )
 
             print("")

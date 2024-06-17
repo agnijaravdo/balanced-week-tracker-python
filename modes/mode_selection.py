@@ -17,7 +17,7 @@ class StartMenuItem(Enum):
     SET_CATEGORIES_AND_TARGET_HOURS = "Set categories and target hours"
     SHOW_CATEGORIES_AND_TARGET_HOURS = "Show categories and target hours"
     LOG_ACTIVITIES_AND_HOURS = "Log activities and hours"
-    SHOW_WEEKLY_STRAVA_ACTIVITIES = "Show weekly Strava activities"
+    SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES = "Show and log weekly Strava activities"
     GENERATE_PERFORMANCE_DATA = "Generate weekly and daily performance data"
     PERSONALIZED_WEEK_ANALYSIS = "Personalized week analysis"
     EXIT_PROGRAM = "Exit program"
@@ -46,7 +46,7 @@ def show_mode_selection_menu():
             validate_categories_count(show_categories_and_target_hours, selected_mode)
         elif selected_mode == StartMenuItem.LOG_ACTIVITIES_AND_HOURS:
             validate_categories_count(log_activities_and_hours, selected_mode)
-        elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
+        elif selected_mode == StartMenuItem.SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES:
             validate_categories_count(show_weekly_strava_activities, selected_mode)
         elif selected_mode == StartMenuItem.GENERATE_PERFORMANCE_DATA:
             validate_activities_count(
