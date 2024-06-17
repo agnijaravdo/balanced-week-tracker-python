@@ -1,6 +1,7 @@
 from enum import Enum
 from simple_term_menu import TerminalMenu
 
+from activity import Activity
 from category import Category
 from modes.display_performance_data import (
     display_total_logged_in_hours_for_each_category,
@@ -70,7 +71,7 @@ def validate_categories_count(function_name, selected_mode):
 
 
 def validate_activities_count(function_name, selected_mode):
-    activities_count = Category.get_number_of_activities()
+    activities_count = Activity.get_number_of_activities()
     if activities_count == 0:
         print(
             f"\n❗ To select '{selected_mode.value}' mode you need to have at least one activity added. Current count of activities is {activities_count}\n"

@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime, timedelta
 from tabulate import tabulate
+from activity import Activity
 from category import Category
 from utils import print_heading
 
@@ -18,13 +19,13 @@ def display_total_logged_in_hours_for_each_category():
     end_of_week_str = end_of_week.strftime("%Y-%m-%d")
 
     categories = Category.get_all_categories()
-    Category.calculate_logged_in_hours_for_category(
+    Activity.calculate_logged_in_hours_for_category(
         categories,
         datetime.strptime(start_of_week_str, "%Y-%m-%d"),
         datetime.strptime(end_of_week_str, "%Y-%m-%d"),
     )
 
-    activities = Category.get_all_activities()
+    activities = Activity.get_all_activities()
     weekly_table = []
     daily_goals_table = []
 

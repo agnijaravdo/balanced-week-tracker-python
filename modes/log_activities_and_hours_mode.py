@@ -1,5 +1,6 @@
 import datetime
 from simple_term_menu import TerminalMenu
+from activity import Activity
 from category import Category
 from utils import clear_screen, print_heading
 
@@ -22,8 +23,9 @@ def log_activities_and_hours():
             if activity_category == None:
                 break
             hours_spent_on_activity = enter_hours_spent_on_activity(logged_date)
-            Category.update_or_create_log_entry(
-                logged_date, activity_category, hours_spent_on_activity
+            categories = Category.get_all_categories()
+            Activity.update_or_create_log_entry(
+                categories, logged_date, activity_category, hours_spent_on_activity
             )
             while True:
                 enter_for_the_same_date = input(

@@ -5,6 +5,7 @@ import time
 import os
 import requests
 from dotenv import load_dotenv
+from activity import Activity
 from category import Category
 from modes.log_activities_and_hours_mode import select_activity_category
 from utils import clear_screen, print_heading
@@ -152,8 +153,9 @@ def log_activities_based_on_response(response, activities_details):
                 clear_screen()
                 return
             if activity_to_log_response.lower() == "yes":
-                Category.update_or_create_log_entry(
-                    parsed_date, category, parsed_moving_time
+                categories = Category.get_all_categories()
+                Activity.update_or_create_log_entry(
+                    categories, parsed_date, category, parsed_moving_time
                 )
             elif activity_to_log_response.lower() == "no":
                 return
