@@ -5,6 +5,7 @@ from category import Category
 from modes.log_activities_and_hours_mode import log_activities_and_hours
 from modes.set_categories_and_target_hours_mode import enter_categories_and_target_hours
 from modes.show_categories_and_target_hours_mode import show_categories_and_target_hours
+from modes.show_weekly_strava_activities import show_weekly_strava_activities
 from utils import clear_screen
 
 
@@ -42,7 +43,7 @@ def show_mode_selection_menu():
         elif selected_mode == StartMenuItem.LOG_ACTIVITIES_AND_HOURS:
             validate_categories_count(log_activities_and_hours, selected_mode)
         elif selected_mode == StartMenuItem.SHOW_WEEKLY_STRAVA_ACTIVITIES:
-            print("Validate if categories not null and show weekly strava data")
+            validate_categories_count(show_weekly_strava_activities, selected_mode)
         elif selected_mode == StartMenuItem.DISPLAY_DOWNLOAD_DATA:
             print(
                 "Validate if categories and activities not null and display and/or download data"
