@@ -61,7 +61,8 @@ def show_mode_selection_menu():
 
 
 def validate_categories_count(function_name, selected_mode):
-    categories_count = Category.get_number_of_categories()
+    categories = Category.get_all_categories()
+    categories_count = Category.get_number_of_categories(categories)
     if categories_count == 0:
         print(
             f"\n❗ To select '{selected_mode.value}' mode you need to have at least one category added. Current count of categories is {categories_count}\n"
@@ -71,7 +72,8 @@ def validate_categories_count(function_name, selected_mode):
 
 
 def validate_activities_count(function_name, selected_mode):
-    activities_count = Activity.get_number_of_activities()
+    activities = Activity.get_all_activities()
+    activities_count = Activity.get_number_of_activities(activities)
     if activities_count == 0:
         print(
             f"\n❗ To select '{selected_mode.value}' mode you need to have at least one activity added. Current count of activities is {activities_count}\n"

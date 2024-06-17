@@ -6,7 +6,12 @@ LOGGED_IN_ACTIVITIES_DATA_PATH = "data/logged_in_activities.csv"
 
 class Activity:
     def __init__(
-        self, activity_date, category_name: str, target_hours: float, is_weekly: bool, logged_in_hours: float
+        self,
+        activity_date,
+        category_name: str,
+        target_hours: float,
+        is_weekly: bool,
+        logged_in_hours: float,
     ):
         self.activity_date = activity_date
         self.category_name = category_name
@@ -169,7 +174,6 @@ class Activity:
         return activities
 
     @staticmethod
-    def get_number_of_activities() -> int:
-        categories = Activity.get_all_activities()
-        categories_count = len(categories)
+    def get_number_of_activities(activities) -> int:
+        categories_count = len(activities)
         return categories_count

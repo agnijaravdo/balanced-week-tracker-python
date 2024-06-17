@@ -5,7 +5,13 @@ CATEGORIES_AND_GOALS_DATA_PATH = "data/categories_and_goals.csv"
 
 
 class Category:
-    def __init__(self, category_name: str, target_hours: float, is_weekly: bool, logged_in_hours=0.0):
+    def __init__(
+        self,
+        category_name: str,
+        target_hours: float,
+        is_weekly: bool,
+        logged_in_hours=0.0,
+    ):
         self.category_name = category_name
         self.target_hours = target_hours
         self.is_weekly = is_weekly
@@ -44,9 +50,6 @@ class Category:
         if not isinstance(value, bool):
             raise ValueError("is_weekly must be a boolean value")
         self._is_weekly = value
-
-    def __repr__(self) -> str:
-        return f"Category {self.category_name} with target hours {self.target_hours}"
 
     @property
     def logged_in_hours(self):
@@ -114,30 +117,13 @@ class Category:
         return categories
 
     @staticmethod
-    def get_number_of_categories() -> int:
-        categories = Category.get_all_categories()
-        categories_count = len(categories)
-        return categories_count
+    def get_number_of_categories(categories: list) -> int:
+        return len(categories)
 
     @staticmethod
-    def get_category_names(categories) -> list:
+    def get_category_names(categories: list) -> list:
         category_names = []
         for category in categories:
             category_names.append(category.category_name)
 
         return category_names
-
-    @staticmethod
-    def get_frequency_based_on_category(category_name):
-        categories = Category.get_all_categories()
-
-        category = None
-        for cat in categories:
-            if cat.category_name == category_name:
-                category = cat
-                break
-
-        if category is None:
-            return "Category was not found"
-
-        return "weekly" if category.is_weekly else "daily"
