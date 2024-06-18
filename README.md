@@ -3,7 +3,7 @@
 Balanced Week Tracker - a Python application that helps you track the time spent on various daily activities to achieve a balanced week.
 Ever wondered about trying the 8/8/8 perfect day formula? Let's track your progress for each daily or weekly activity such as sleep, work, exercise, learning, and anything else you like! Then you can check your progress and receive a detailed performance analysis with feedback on how your week went. 
 
-The application integrates with the Strava API to fetch activities directly from Strava, making it easier to log and analyze your fitness data.
+The application integrates with the [Strava API](https://developers.strava.com/docs/reference/) to fetch activities directly from Strava, making it easier to log and analyze your fitness data.
 
 ## Features
 
