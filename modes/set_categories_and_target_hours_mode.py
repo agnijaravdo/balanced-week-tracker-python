@@ -11,14 +11,7 @@ def enter_categories_and_target_hours():
 
     while True:
         try:
-            category_name = input(
-                "Enter category like 'Sleep', 'Work', 'Move', etc. name (or 'done' to finish): "
-            ).strip()
-            if not is_category_name_valid(category_name):
-                print(
-                    "Please enter a valid category name. It cannot be empty, consist only of numbers or be already logged in"
-                )
-                continue
+            category_name = enter_category_name()
             if category_name.lower() == "done":
                 clear_screen()
                 break
@@ -32,6 +25,19 @@ def enter_categories_and_target_hours():
         except (KeyboardInterrupt, EOFError):
             clear_screen()
             break
+
+
+def enter_category_name() -> str:
+    while True:
+        category_name = input(
+            "Enter category like 'Sleep', 'Work', 'Move', etc. name (or 'done' to finish): "
+        ).strip()
+        if not is_category_name_valid(category_name):
+            print(
+                "Please enter a valid category name. It cannot be empty, consist only of numbers or be already logged in"
+            )
+            continue
+        return category_name
 
 
 def is_target_weekly() -> bool:
@@ -54,7 +60,7 @@ def is_target_weekly() -> bool:
     return is_weekly
 
 
-def is_category_name_valid(category_name):
+def is_category_name_valid(category_name: str) -> bool:
     existing_categories = Category.get_all_categories()
     existing_category_names = Category.get_category_names(existing_categories)
     if not category_name:
@@ -67,7 +73,7 @@ def is_category_name_valid(category_name):
         return True
 
 
-def get_correct_target_hours_input(frequency, category_name) -> float:
+def get_correct_target_hours_input(frequency: str, category_name: str) -> float:
     while True:
         try:
             target_hours = float(

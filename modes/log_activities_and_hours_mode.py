@@ -4,6 +4,7 @@ from activity import Activity
 from category import Category
 from utils import clear_screen, print_heading
 
+
 def log_activities_and_hours() -> None:
     print_heading("Log Activities And Hours Spent on Them")
     print(
@@ -20,7 +21,7 @@ def log_activities_and_hours() -> None:
         try:
             enter_categories_and_target_hours(logged_date)
             logged_date = ask_for_the_same_activity_date(logged_date)
-            
+
         except (KeyboardInterrupt, EOFError):
             clear_screen()
             break
@@ -35,17 +36,18 @@ def enter_categories_and_target_hours(logged_date: datetime.date) -> None:
             categories, logged_date, activity_category, hours_spent_on_activity
         )
 
-def ask_for_the_same_activity_date(logged_date: datetime.date) -> (datetime.date | None):
+
+def ask_for_the_same_activity_date(logged_date: datetime.date) -> datetime.date | None:
     while True:
         enter_for_the_same_date = input(
             f"Do you want to input next activities for the same date {logged_date}? y/n: "
         ).lower()
-        
+
         if enter_for_the_same_date in ["y", "n"]:
             break
         else:
             print("Invalid input. Input can be only 'y' or 'n'")
-    
+
     if enter_for_the_same_date == "n":
         try:
             return enter_activity_date()
@@ -53,7 +55,6 @@ def ask_for_the_same_activity_date(logged_date: datetime.date) -> (datetime.date
             clear_screen()
             return None
     return logged_date
-
 
 
 def enter_activity_date() -> datetime.date:
