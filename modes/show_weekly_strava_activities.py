@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from simple_term_menu import TerminalMenu
-import json
 import time
 import os
 import requests
@@ -49,7 +48,6 @@ def get_strava_activities_response():
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
         activities = response.json()
-        # print(json.dumps(activities, indent=2))
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
     except Exception as err:
@@ -163,7 +161,7 @@ def log_activities_based_on_response(response, activities_details):
         clear_screen()
 
 
-def time_string_to_float(time_string):
+def time_string_to_float(time_string: str) -> float:
     time_parts = time_string.split(":")
     hours, minutes, seconds = map(int, time_parts)
     total_hours = hours + minutes / 60 + seconds / 3600
