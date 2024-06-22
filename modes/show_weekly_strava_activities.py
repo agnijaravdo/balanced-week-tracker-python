@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import sys
 from simple_term_menu import TerminalMenu
 import time
 import os
@@ -49,9 +50,9 @@ def get_strava_activities_response():
         response.raise_for_status()
         activities = response.json()
     except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err}")
+        sys.exit(f"HTTP error occurred: {http_err}")
     except Exception as err:
-        print(f"Other error occurred: {err}")
+        sys.exit(f"Other error occurred: {err}")
 
     return activities
 

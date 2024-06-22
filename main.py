@@ -1,4 +1,3 @@
-from category import Category
 from modes.mode_selection import show_mode_selection_menu
 from utils import print_heading
 

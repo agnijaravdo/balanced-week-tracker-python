@@ -6,27 +6,39 @@ from modes.display_performance_data import (
     prepare_weekly_table,
 )
 from category import Category
+from test.test_data.test_constants import (
+    CATEGORY_LEARNING,
+    CATEGORY_READING,
+    CATEGORY_WORKING,
+    DATE,
+    LOGGED_IN_HOURS_1,
+    LOGGED_IN_HOURS_2,
+    LOGGED_IN_HOURS_3,
+    TARGET_HOURS_2,
+    TARGET_HOURS_3,
+    TARGET_HOURS_5,
+)
 
 
 def test_prepare_weekly_table():
 
     categories = [
-        Category("Learning", 5.0, True, 2.0),
-        Category("Reading", 3.0, False, 1.0),
-        Category("Working", 2.0, True, 3.0),
+        Category(CATEGORY_LEARNING, TARGET_HOURS_5, True, LOGGED_IN_HOURS_2),
+        Category(CATEGORY_READING, TARGET_HOURS_3, False, LOGGED_IN_HOURS_1),
+        Category(CATEGORY_WORKING, TARGET_HOURS_2, True, LOGGED_IN_HOURS_3),
     ]
     weekly_table = prepare_weekly_table(categories)
 
     assert weekly_table == [
-        ["Learning", True, 5.0, 2.0],
-        ["Working", True, 2.0, 3.0],
+        [CATEGORY_LEARNING, True, TARGET_HOURS_5, LOGGED_IN_HOURS_2],
+        [CATEGORY_WORKING, True, TARGET_HOURS_2, LOGGED_IN_HOURS_3],
     ]
 
 
 def test_prepare_weekly_table_no_is_weekly_categories():
 
     categories = [
-        Category("Reading", 3.0, False, 1.0),
+        Category(CATEGORY_READING, TARGET_HOURS_3, False, LOGGED_IN_HOURS_1),
     ]
     weekly_table = prepare_weekly_table(categories)
 
@@ -44,16 +56,16 @@ def test_prepare_weekly_table_no_categories():
 def test_prepare_daily_table():
 
     activities = [
-        Activity("2024-06-07", "Learning", 5.0, True, 2.0),
-        Activity("2024-06-07", "Reading", 3.0, False, 1.0),
-        Activity("2024-06-07", "Working", 2.0, True, 3.0),
+        Activity(DATE, CATEGORY_LEARNING, TARGET_HOURS_5, True, LOGGED_IN_HOURS_2),
+        Activity(DATE, CATEGORY_READING, TARGET_HOURS_3, False, LOGGED_IN_HOURS_1),
+        Activity(DATE, CATEGORY_WORKING, TARGET_HOURS_2, True, LOGGED_IN_HOURS_3),
     ]
     start_of_week = datetime(2024, 6, 3)
     end_of_week = datetime(2024, 6, 9)
     daily_table = prepare_daily_table(activities, start_of_week, end_of_week)
 
     assert daily_table == [
-        ["Reading", False, "2024-06-07", 3.0, 1.0],
+        [CATEGORY_READING, False, DATE, TARGET_HOURS_3, LOGGED_IN_HOURS_1],
     ]
 
 
