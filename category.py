@@ -66,7 +66,7 @@ class Category:
         self._logged_in_hours = value
 
     @staticmethod
-    def write_category_and_target_hours_to_file(category) -> None:
+    def write_category_and_target_hours_to_file(category: "Category") -> None:
         is_file_exists = os.path.isfile(CATEGORIES_AND_GOALS_DATA_PATH)
 
         max_id = 0
@@ -102,8 +102,8 @@ class Category:
             )
 
     @staticmethod
-    def get_all_categories() -> list:
-        categories = []
+    def get_all_categories() -> list["Category"]:
+        categories: list["Category"] = []
         with open(CATEGORIES_AND_GOALS_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
@@ -117,12 +117,12 @@ class Category:
         return categories
 
     @staticmethod
-    def get_number_of_categories(categories: list) -> int:
+    def get_number_of_categories(categories: list["Category"]) -> int:
         return len(categories)
 
     @staticmethod
-    def get_category_names(categories: list) -> list:
-        category_names = []
+    def get_category_names(categories: list["Category"]) -> list[str]:
+        category_names: list[str] = []
         for category in categories:
             category_names.append(category.category_name)
 

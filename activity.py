@@ -1,6 +1,8 @@
 import csv
 from datetime import datetime
 
+from category import Category
+
 LOGGED_IN_ACTIVITIES_DATA_PATH = "data/logged_in_activities.csv"
 
 
@@ -73,7 +75,10 @@ class Activity:
 
     @staticmethod
     def update_or_create_log_entry(
-        categories, activity_date, activity_category, logged_in_hours
+        categories: list["Category"],
+        activity_date: float,
+        activity_category: "Category",
+        logged_in_hours: float,
     ):
 
         category = None
@@ -135,7 +140,9 @@ class Activity:
 
     @staticmethod
     def calculate_logged_in_hours_for_category(
-        categories, start_date=None, end_date=None
+        categories: list["Category"],
+        start_date: datetime = None,
+        end_date: datetime = None,
     ):
         with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
@@ -154,8 +161,8 @@ class Activity:
                         category.logged_in_hours += logged_in_hours
 
     @staticmethod
-    def get_all_activities() -> list:
-        activities = []
+    def get_all_activities() -> list["Activity"]:
+        activities: list["Activity"] = []
         with open(LOGGED_IN_ACTIVITIES_DATA_PATH, "r") as file:
             reader = csv.DictReader(file)
             for row in reader:
@@ -171,6 +178,6 @@ class Activity:
         return activities
 
     @staticmethod
-    def get_number_of_activities(activities) -> int:
+    def get_number_of_activities(activities: list["Activity"]) -> int:
         categories_count = len(activities)
         return categories_count

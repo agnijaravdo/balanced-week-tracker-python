@@ -71,7 +71,7 @@ def enter_activity_date() -> datetime.date:
             )
 
 
-def select_activity_category():
+def select_activity_category() -> str | None:
     categories = Category.get_all_categories()
     categories_names = Category.get_category_names(categories)
     terminal_menu = TerminalMenu(

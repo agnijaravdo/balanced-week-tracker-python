@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Callable
 from simple_term_menu import TerminalMenu
 
 from activity import Activity
@@ -23,17 +24,31 @@ class StartMenuItem(Enum):
     PERSONALIZED_WEEK_ANALYSIS = "Personalized week analysis"
     EXIT_PROGRAM = "Exit program"
 
+
 START_MENU_ACTIONS = {
     StartMenuItem.SET_CATEGORIES_AND_TARGET_HOURS: lambda: enter_categories_and_target_hours(),
-    StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS: lambda: validate_categories_count(show_categories_and_target_hours, StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS),
-    StartMenuItem.LOG_ACTIVITIES_AND_HOURS: lambda: validate_categories_count(log_activities_and_hours, StartMenuItem.LOG_ACTIVITIES_AND_HOURS),
-    StartMenuItem.SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES: lambda: validate_categories_count(show_weekly_strava_activities, StartMenuItem.SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES),
-    StartMenuItem.GENERATE_PERFORMANCE_DATA: lambda: validate_activities_count(display_total_logged_in_hours_for_each_category, StartMenuItem.GENERATE_PERFORMANCE_DATA),
-    StartMenuItem.PERSONALIZED_WEEK_ANALYSIS: lambda: validate_activities_count(show_personalised_week_analysis, StartMenuItem.PERSONALIZED_WEEK_ANALYSIS),
-    StartMenuItem.EXIT_PROGRAM: lambda: exit_program()
+    StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS: lambda: validate_categories_count(
+        show_categories_and_target_hours, StartMenuItem.SHOW_CATEGORIES_AND_TARGET_HOURS
+    ),
+    StartMenuItem.LOG_ACTIVITIES_AND_HOURS: lambda: validate_categories_count(
+        log_activities_and_hours, StartMenuItem.LOG_ACTIVITIES_AND_HOURS
+    ),
+    StartMenuItem.SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES: lambda: validate_categories_count(
+        show_weekly_strava_activities,
+        StartMenuItem.SHOW_AND_LOG_WEEKLY_STRAVA_ACTIVITIES,
+    ),
+    StartMenuItem.GENERATE_PERFORMANCE_DATA: lambda: validate_activities_count(
+        display_total_logged_in_hours_for_each_category,
+        StartMenuItem.GENERATE_PERFORMANCE_DATA,
+    ),
+    StartMenuItem.PERSONALIZED_WEEK_ANALYSIS: lambda: validate_activities_count(
+        show_personalised_week_analysis, StartMenuItem.PERSONALIZED_WEEK_ANALYSIS
+    ),
+    StartMenuItem.EXIT_PROGRAM: lambda: exit_program(),
 }
 
-def show_mode_selection_menu():
+
+def show_mode_selection_menu() -> None:
     while True:
         options = [item.value for item in StartMenuItem]
         terminal_menu = TerminalMenu(
@@ -54,7 +69,9 @@ def show_mode_selection_menu():
             break
 
 
-def validate_categories_count(function_name, selected_mode):
+def validate_categories_count(
+    function_name: Callable[[], None], selected_mode: str
+) -> None:
     categories = Category.get_all_categories()
     categories_count = Category.get_number_of_categories(categories)
     if categories_count == 0:
@@ -65,7 +82,9 @@ def validate_categories_count(function_name, selected_mode):
         function_name()
 
 
-def validate_activities_count(function_name, selected_mode):
+def validate_activities_count(
+    function_name: Callable[[], None], selected_mode: str
+) -> None:
     activities = Activity.get_all_activities()
     activities_count = Activity.get_number_of_activities(activities)
     if activities_count == 0:
@@ -75,6 +94,7 @@ def validate_activities_count(function_name, selected_mode):
     else:
         function_name()
 
-def exit_program():
+
+def exit_program() -> bool:
     print("Exiting program. Goodbye!👋")
     return True

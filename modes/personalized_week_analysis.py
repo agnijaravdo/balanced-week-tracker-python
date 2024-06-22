@@ -37,7 +37,7 @@ def display_daily_goals_performance() -> None:
     display_goals_performance(DAILY_PERFORMANCE_DATA_PATH, "Daily")
 
 
-def display_goals_performance(file_path, period: str) -> None:
+def display_goals_performance(file_path: str, period: str) -> None:
     with open(file_path, mode="r") as file:
         reader = csv.DictReader(file)
         for row in reader:

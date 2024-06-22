@@ -11,13 +11,13 @@ from modes.log_activities_and_hours_mode import select_activity_category
 from utils import clear_screen, print_heading
 
 
-def show_weekly_strava_activities():
+def show_weekly_strava_activities() -> None:
     print_heading("Weekly Strava Activities")
     print(
         "⬅️ To go back to the main menu - press Ctrl+C or Ctrl+D. To close the program, press Ctrl+Z.\n"
     )
     try:
-        activities_response = get_strava_activities_response()
+        activities_response: list[dict] = get_strava_activities_response()
         activities_details = return_and_print_weekly_strava_activities_details(
             activities_response
         )
@@ -28,7 +28,7 @@ def show_weekly_strava_activities():
         return
 
 
-def get_strava_activities_response():
+def get_strava_activities_response() -> list[dict] | None:
 
     load_dotenv()
 
@@ -48,7 +48,7 @@ def get_strava_activities_response():
     try:
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
-        activities = response.json()
+        activities: list[dict] = response.json()
     except requests.exceptions.HTTPError as http_err:
         sys.exit(f"HTTP error occurred: {http_err}")
     except Exception as err:
@@ -57,7 +57,9 @@ def get_strava_activities_response():
     return activities
 
 
-def return_and_print_weekly_strava_activities_details(activities_response):
+def return_and_print_weekly_strava_activities_details(
+    activities_response: list[dict],
+) -> list[dict]:
     activities_details = []
 
     for i, result in enumerate(activities_response, 1):
@@ -82,8 +84,8 @@ def return_and_print_weekly_strava_activities_details(activities_response):
     return activities_details
 
 
-def select_whether_to_log_activities_from_strava():
-    options = ["Yes", "No"]
+def select_whether_to_log_activities_from_strava() -> str | None:
+    options: list[str] = ["Yes", "No"]
     terminal_menu = TerminalMenu(
         options,
         title="\nℹ️ Would you like to log any of these activities into your weekly tracker?: \n",
@@ -99,12 +101,14 @@ def select_whether_to_log_activities_from_strava():
     if menu_entry_index == None:
         return
 
-    selected_mode = options[menu_entry_index]
+    selected_mode: str = options[menu_entry_index]
 
     return selected_mode
 
 
-def select_whether_to_log_individual_activity_from_strava(activity_info):
+def select_whether_to_log_individual_activity_from_strava(
+    activity_info: str,
+) -> str | None:
     options = ["Yes", "No"]
     terminal_menu = TerminalMenu(
         options,
@@ -121,12 +125,12 @@ def select_whether_to_log_individual_activity_from_strava(activity_info):
     if menu_entry_index == None:
         return
 
-    selected_mode = options[menu_entry_index]
+    selected_mode: str = options[menu_entry_index]
 
     return selected_mode
 
 
-def log_activities_based_on_response(response, activities_details):
+def log_activities_based_on_response(response: str, activities_details: list[dict]):
     if response == "No":
         clear_screen()
         return

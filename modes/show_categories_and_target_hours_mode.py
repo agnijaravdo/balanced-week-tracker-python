@@ -2,7 +2,7 @@ from category import Category
 from tabulate import tabulate
 
 
-def show_categories_and_target_hours():
+def show_categories_and_target_hours() -> None:
     categories = Category.get_all_categories()
 
     table = []

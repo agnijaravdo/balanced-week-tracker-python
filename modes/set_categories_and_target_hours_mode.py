@@ -3,7 +3,7 @@ from category import Category
 from utils import clear_screen, print_heading
 
 
-def enter_categories_and_target_hours():
+def enter_categories_and_target_hours() -> None:
     print_heading("Set Categories and Target Hours")
     print(
         "⬅️ To go back to the main menu, press Ctrl+C or Ctrl+D. To close the program, press Ctrl+Z.\n"
