@@ -64,10 +64,13 @@ def is_category_name_valid(category_name: str) -> bool:
     existing_categories = Category.get_all_categories()
     existing_category_names = Category.get_category_names(existing_categories)
     if not category_name:
+        print("Category name cannot be empty")
         return False
     elif category_name.isnumeric():
+        print("Category name cannot consist only of numbers")
         return False
     if category_name.lower() in (name.lower() for name in existing_category_names):
+        print(f"Category name '{category_name}' already exists")
         return False
     else:
         return True
